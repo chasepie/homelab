@@ -1,0 +1,20 @@
+app:
+  dashboard_url: "op://Dev/5tq45hipnmcywfk7gzzn66fh5u/URL"
+  anonymous_usage: false
+
+domains:
+  chasepie_com:
+    base_domain: "chasepie.com"
+    cert_resolver: "letsencrypt"
+    prefer_wildcard_cert: true
+
+server:
+  secret: "op://Dev/5tq45hipnmcywfk7gzzn66fh5u/server secret"
+
+gerbil:
+  base_endpoint: "op://Dev/5tq45hipnmcywfk7gzzn66fh5u/base_endpoint"
+
+flags:
+  require_email_verification: false
+  disable_signup_without_invite: true
+  disable_user_create_org: true

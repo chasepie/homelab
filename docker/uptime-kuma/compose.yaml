@@ -1,0 +1,13 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:2
+    container_name: uptime-kuma
+    restart: unless-stopped
+    networks:
+      - pangolin
+    volumes:
+      - /srv/docker/uptime-kuma:/app/data
+
+networks:
+  pangolin:
+    external: true

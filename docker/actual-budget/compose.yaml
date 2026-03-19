@@ -1,0 +1,34 @@
+services:
+  actual-server:
+    image: docker.io/actualbudget/actual-server:latest
+    container_name: actual-budget
+    ports:
+      - "5006:5006"
+    env_file: .env
+    volumes:
+      - /mnt/main/appdata/actual-budget/data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "node src/scripts/health-check.js"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+
+  actual-ai:
+    image: docker.io/sakowicz/actual-ai:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NOT_GUESSED_TAG: "#ai-uncategorized"
+      CLASSIFICATION_SCHEDULE_CRON: 0 */4 * * *
+      LLM_PROVIDER: openai
+      FEATURES: '["freeWebSearch", "classifyOnStartup", "syncAccountsBeforeClassify", "rerunMissedTransactions"]'
+      OPENAI_MODEL: "qwen3.5:latest"
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-http://host.docker.internal:3100/ollama/v1}
+      ACTUAL_SERVER_URL: ${ACTUAL_SERVER_URL:-http://actual-server:5006}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      actual-server:
+        condition: service_healthy

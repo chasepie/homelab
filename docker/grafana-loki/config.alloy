@@ -1,0 +1,38 @@
+logging {
+  level  = "info"
+  format = "logfmt"
+}
+
+// OTLP receiver for logs
+otelcol.receiver.otlp "default" {
+  grpc {
+    endpoint = "0.0.0.0:4317"
+  }
+
+  http {
+    endpoint = "0.0.0.0:4318"
+  }
+
+  output {
+    logs    = [otelcol.processor.batch.default.input]
+  }
+}
+
+// Batch processor for efficiency
+otelcol.processor.batch "default" {
+  output {
+    logs    = [otelcol.exporter.loki.default.input]
+  }
+}
+
+// Loki exporter
+otelcol.exporter.loki "default" {
+  forward_to = [loki.write.default.receiver]
+}
+
+// Loki write endpoint
+loki.write "default" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}

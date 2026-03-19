@@ -1,0 +1,302 @@
+[[server]]
+name = "Pangolin VPS"
+[server.config]
+address = "https://pangolin.chasepie.com:8120"
+enabled = true
+
+##
+
+[[server]]
+name = "Raspberry Pi 5 - 01 (Local)"
+[server.config]
+enabled = true
+
+##
+
+[[server]]
+name = "Raspberry Pi 5 - 02"
+[server.config]
+address = "https://rpi5-02.local:8120"
+enabled = true
+
+##
+
+[[server]]
+name = "Raspberry Pi 5 - 03"
+[server.config]
+address = "https://rpi5-03.local:8120"
+enabled = true
+
+##
+
+[[server]]
+name = "Unraid"
+[server.config]
+address = "https://unraid.local:8120"
+enabled = true
+
+##
+
+[[stack]]
+name = "1password-connect"
+[stack.config]
+server = "Unraid"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/1password"
+
+##
+
+[[stack]]
+name = "actual-budget"
+[stack.config]
+server = "Unraid"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/actual-budget"
+pre_deploy.command = """
+export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
+export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
+op inject -f -i compose.env -o .env
+"""
+
+##
+
+[[stack]]
+name = "healthchecks-unraid"
+[stack.config]
+server = "Unraid"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/healthchecks"
+environment = """
+HEALTHCHECKS_URL=[[HEALTHCHECKS_UNRAID]]
+"""
+
+##
+
+[[stack]]
+name = "immich"
+[stack.config]
+server = "Unraid"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/immich"
+pre_deploy.command = """
+export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
+export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
+op inject -f -i compose.env -o .env
+"""
+
+##
+
+[[stack]]
+name = "karakeep"
+[stack.config]
+server = "Unraid"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/karakeep"
+pre_deploy.command = """
+export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
+export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
+op inject -f -i compose.env -o .env
+"""
+environment = """
+DISABLE_SIGNUPS=true
+"""
+
+##
+
+[[stack]]
+name = "nginx-proxy-manager"
+[stack.config]
+server = "Raspberry Pi 5 - 01 (Local)"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/nginx-proxy-manager"
+
+##
+
+[[stack]]
+name = "open-webui"
+[stack.config]
+server = "Unraid"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/open-webui"
+
+##
+
+[[stack]]
+name = "pangolin"
+[stack.config]
+server = "Pangolin VPS"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/pangolin"
+environment = """
+PORKBUN_API_KEY=[[PORKBUN_API_KEY]]
+PORKBUN_SECRET_API_KEY=[[PORKBUN_SECRET_API_KEY]]
+"""
+
+##
+
+[[stack]]
+name = "pangolin-newt-ddvm"
+[stack.config]
+server = "Unraid"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/pangolin-newt"
+pre_deploy.command = """
+export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
+export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
+op inject -f -i compose.env -o .env
+"""
+
+##
+
+[[stack]]
+name = "pi-hole-1"
+[stack.config]
+server = "Raspberry Pi 5 - 01 (Local)"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/pi-hole"
+pre_deploy.command = """
+export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
+export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
+op inject -f -i compose.env -o .env
+"""
+
+##
+
+[[stack]]
+name = "pi-hole-2"
+[stack.config]
+server = "Raspberry Pi 5 - 02"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/pi-hole"
+pre_deploy.command = """
+export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
+export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
+op inject -f -i compose.env -o .env
+"""
+
+##
+
+[[stack]]
+name = "romm"
+[stack.config]
+server = "Unraid"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/romm"
+pre_deploy.command = """
+export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
+export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
+op inject -f -i compose.env -o .env
+"""
+
+##
+
+[[stack]]
+name = "site-checker"
+[stack.config]
+server = "Unraid"
+poll_for_updates = true
+linked_repo = "homelab"
+run_directory = "docker/site-checker"
+registry_provider = "ghcr.io"
+registry_account = "chasepie"
+pre_deploy.command = """
+export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
+export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
+op inject -f -i compose.env -o .env
+"""
+
+##
+
+[[repo]]
+name = "homelab"
+[repo.config]
+server = "Raspberry Pi 5 - 01 (Local)"
+git_account = "chasepie"
+repo = "chasepie/homelab"
+
+##
+
+[[procedure]]
+name = "Backup Core Database"
+description = "Triggers the Core database backup at the scheduled time."
+tags = ["system"]
+config.schedule_alert = false
+config.schedule = "Every day at 01:00"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
+]
+
+##
+
+[[procedure]]
+name = "Global Auto Update"
+description = "Pulls and auto updates Stacks and Deployments using 'poll_for_updates' or 'auto_update'."
+tags = ["system"]
+config.schedule_alert = false
+config.schedule = "Every day at 03:00"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "GlobalAutoUpdate", execution.params = {}, enabled = true }
+]
+
+##
+
+[[builder]]
+name = "Local"
+[builder.config]
+type = "Server"
+params.server_id = "Raspberry Pi 5 - 01 (Local)"
+
+##
+
+[[resource_sync]]
+name = "homelab-sync"
+[resource_sync.config]
+linked_repo = "homelab"
+resource_path = ["docker/komodo/config.toml"]
+managed = true
+delete = true
+pending_alert = false

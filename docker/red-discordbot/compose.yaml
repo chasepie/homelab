@@ -1,0 +1,14 @@
+services:
+  redbot:
+    container_name: redbot
+    image: phasecorex/red-discordbot
+    restart: unless-stopped
+    volumes:
+      - redbot_data:/data
+    environment:
+      - TOKEN=${RED_DISCORDBOT_TOKEN}
+      - PREFIX=.
+      - TZ=America/Detroit
+
+volumes:
+  redbot_data:

@@ -1,0 +1,62 @@
+# https://github.com/grafana/alloy-scenarios/blob/main/app-instrumentation/logging/popular-logging-frameworks/docker-compose.yml
+
+services:
+  loki:
+    image: grafana/loki:latest
+    restart: unless-stopped
+    container_name: loki
+    # ports:
+    #   - "3100:3100" # Loki API endpoint - receives and queries logs
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    # ports:
+    # - 3002:3000/tcp # Grafana web UI - dashboards and visualization interface
+    networks:
+      - reverse-proxy-network
+      - default
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: false
+          version: 1
+          editable: false
+        EOF
+        /run.sh
+
+  alloy:
+    image: grafana/alloy:latest
+    container_name: alloy
+    restart: unless-stopped
+    # ports:
+    #   - 12345:12345 # Alloy server UI/API - web interface for monitoring Alloy
+    #   - 4317:4317 # OTLP gRPC endpoint - receives logs via OpenTelemetry Protocol (binary)
+    #   - 4318:4318 # OTLP HTTP endpoint - receives logs via OpenTelemetry Protocol (HTTP/JSON)
+    networks:
+      - reverse-proxy-network
+      - default
+    volumes:
+      - ./config.alloy:/etc/alloy/config.alloy
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
+
+networks:
+  reverse-proxy-network:
+    external: true
+    name: npm

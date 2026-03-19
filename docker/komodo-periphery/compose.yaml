@@ -1,0 +1,27 @@
+####################################
+# 🦎 KOMODO COMPOSE - PERIPHERY 🦎 #
+####################################
+
+# Install the 1Password CLI first:
+# https://developer.1password.com/docs/cli/get-started#step-1-install-1password-cli
+
+services:
+  periphery:
+    image: ghcr.io/moghtech/komodo-periphery:${COMPOSE_KOMODO_IMAGE_TAG:-latest}
+    container_name: komodo-periphery
+    labels:
+      komodo.skip: # Prevent Komodo from stopping with StopAllContainers
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PERIPHERY_ROOT_DIRECTORY: ${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}
+      PERIPHERY_SSL_ENABLED: true
+      PERIPHERY_DISABLE_TERMINALS: false
+      PERIPHERY_INCLUDE_DISK_MOUNTS: /etc/hostname
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /proc:/proc
+      - ${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}:${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}
+      - /usr/bin/op:/usr/bin/op
+    ports:
+      - 8120:8120
