@@ -11,9 +11,10 @@ Docker Compose configurations for my self-hosted homelab infrastructure, managed
 │  │ Pangolin  │  │  Gerbil   │  │     Traefik       │    │
 │  │ (tunnel)  │  │(WireGuard)│  │ (reverse proxy)   │    │
 │  └───────────┘  └───────────┘  └───────────────────┘    │
-│  ┌───────────┐                                          │
-│  │Healthchks │                                          │
-│  └───────────┘                                          │
+│  ┌───────────┐  ┌───────────────────┐                   │
+│  │Healthchks │  │ Komodo Periphery  │                   │
+│  │           │  │  (node agent)     │                   │
+│  └───────────┘  └───────────────────┘                   │
 └─────────────────────────────────────────────────────────┘
             │ WireGuard tunnel
 ┌───────────┴─────────────────────────────────────────────┐
@@ -67,16 +68,16 @@ Docker Compose configurations for my self-hosted homelab infrastructure, managed
 
 | Service                                               | Directory                     | Description                                                            |
 | ----------------------------------------------------- | ----------------------------- | ---------------------------------------------------------------------- |
-| [Pangolin](https://github.com/fosrl/pangolin)         | `docker/pangolin/`            | Tunnel orchestrator with Gerbil (WireGuard) and Traefik reverse proxy. |
+| [Pangolin](https://pangolin.net)                      | `docker/pangolin/`            | Tunnel orchestrator with Gerbil (WireGuard) and Traefik reverse proxy. |
 | [Pangolin Newt](https://github.com/fosrl/newt)        | `docker/pangolin-newt/`       | Tunnel client connecting local services to the Pangolin VPS.           |
 | [Nginx Proxy Manager](https://nginxproxymanager.com/) | `docker/nginx-proxy-manager/` | Local network reverse proxy running on a Raspberry Pi.                 |
 
 ### Media & Storage
 
-| Service                                 | Directory        | Description                                                                                                       |
-| --------------------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------- |
-| [Immich](https://immich.app/)           | `docker/immich/` | Self-hosted photo/video management with NVIDIA GPU-accelerated ML inference (CUDA) and video transcoding (NVENC). |
-| [ROMM](https://github.com/rommapp/romm) | `docker/romm/`   | ROM library manager with metadata scraping from IGDB, SteamGridDB, RetroAchievements, and more.                   |
+| Service                       | Directory        | Description                                                                                                       |
+| ----------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------- |
+| [Immich](https://immich.app/) | `docker/immich/` | Self-hosted photo/video management with NVIDIA GPU-accelerated ML inference (CUDA) and video transcoding (NVENC). |
+| [ROMM](https://romm.app)      | `docker/romm/`   | ROM library manager with metadata scraping from IGDB, SteamGridDB, RetroAchievements, and more.                   |
 
 ### AI & LLM
 
@@ -86,17 +87,17 @@ Docker Compose configurations for my self-hosted homelab infrastructure, managed
 
 ### Productivity
 
-| Service                                              | Directory               | Description                                                                                              |
-| ---------------------------------------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------- |
-| [Actual Budget](https://actualbudget.org/)           | `docker/actual-budget/` | Personal finance manager with AI-powered transaction classification via Ollama.                          |
-| [Karakeep](https://github.com/karakeep-app/karakeep) | `docker/karakeep/`      | Web archiving and bookmarking with AI tagging/summarization (Ollama) and full-text search (Meilisearch). |
+| Service                                    | Directory               | Description                                                                                              |
+| ------------------------------------------ | ----------------------- | -------------------------------------------------------------------------------------------------------- |
+| [Actual Budget](https://actualbudget.org/) | `docker/actual-budget/` | Personal finance manager with AI-powered transaction classification via Ollama.                          |
+| [Karakeep](https://karakeep.app)           | `docker/karakeep/`      | Web archiving and bookmarking with AI tagging/summarization (Ollama) and full-text search (Meilisearch). |
 
 ### Infrastructure & Monitoring
 
 | Service                                                  | Directory                  | Description                                                                                               |
 | -------------------------------------------------------- | -------------------------- | --------------------------------------------------------------------------------------------------------- |
 | [Komodo](https://komo.do/)                               | `docker/komodo/`           | Infrastructure management dashboard. Manages deployments across all hosts (Unraid, VPS, Raspberry Pis).   |
-| [Komodo Periphery](https://komo.do/)                     | `docker/komodo-periphery/` | Komodo node agent running on Unraid and all Raspberry Pis for local Docker management.                    |
+| [Komodo Periphery](https://komo.do/)                     | `docker/komodo-periphery/` | Komodo node agent running on the VPS, Unraid, and all Raspberry Pis for local Docker management.          |
 | [Grafana + Loki](https://grafana.com/oss/loki/)          | `docker/grafana-loki/`     | Log aggregation (Loki), visualization (Grafana), and collection (Alloy) stack with OpenTelemetry support. |
 | [Healthchecks](https://healthchecks.io/)                 | `docker/healthchecks/`     | Cron/scheduled task ping monitoring. Deployed on all hosts for uptime visibility.                         |
 | [Site Checker](https://github.com/chasepie/site-checker) | `docker/site-checker/`     | Multi-network site monitoring with headless Chrome, including a PIA VPN exit for geo-testing.             |
