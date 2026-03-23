@@ -1,21 +1,23 @@
 services:
   app:
-    image: ghcr.io/chasepie/site-checker:latest
+    image: ghcr.io/chasepie/site-checker-personal:latest
     container_name: site-checker
     restart: unless-stopped
     networks:
       - default
       - pangolin
     ports:
-      - 8080:8080
-    env_file: .env
+      - "8080:8080"
+    env_file:
+      - .env
     environment:
-      - TZ=America/Detroit
+      - TZ=America/New_York
       - BROWSERLESS_URL=ws://browserless:3000
       - BROWSERLESS_URL_VPN=ws://vpn:3000
+      - VPN_CHANGE_INTERVAL=10
     volumes:
-      - /mnt/main/appdata/site-checker/data:/app/Database/data
-      - /mnt/main/appdata/site-checker/logs:/app/Logs
+      - /mnt/main/appdata/site-checker/data:/app/data
+      - /mnt/main/appdata/site-checker/logs:/app/logs
       - /mnt/main/appdata/site-checker/pia:/pia
       - /var/run/docker.sock:/var/run/docker.sock:ro
     depends_on:
@@ -26,9 +28,8 @@ services:
     image: ghcr.io/browserless/chromium:latest
     container_name: site-checker-browserless
     restart: unless-stopped
-    env_file: .env
     environment:
-      - TZ=America/Detroit
+      - TZ=America/New_York
       - TOKEN=${BROWSERLESS_TOKEN}
       - TIMEOUT=180000
 
@@ -36,9 +37,8 @@ services:
     image: ghcr.io/browserless/chromium:latest
     container_name: site-checker-browserless-vpn
     restart: unless-stopped
-    env_file: .env
     environment:
-      - TZ=America/Detroit
+      - TZ=America/New_York
       - TOKEN=${BROWSERLESS_TOKEN}
       - TIMEOUT=180000
     network_mode: "service:vpn"
@@ -56,11 +56,11 @@ services:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
-    env_file: .env
     environment:
-      - TZ=America/Detroit
+      - TZ=America/New_York
       - USER=${PIA_USERNAME}
       - PASS=${PIA_PASSWORD}
+      - ACTIVE_HEALTHCHECKS=1
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv6.conf.default.disable_ipv6=1
