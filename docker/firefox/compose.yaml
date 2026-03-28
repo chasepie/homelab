@@ -11,10 +11,10 @@ services:
       - FIREFOX_CLI=https://www.linuxserver.io/ #optional
 
       # https://github.com/linuxserver/docker-firefox?tab=readme-ov-file#hardware-acceleration--the-move-to-wayland
-      - PIXELFLUX_WAYLAND=true
+      # - PIXELFLUX_WAYLAND=true
       # Ensure these point to the rendered node injected by the runtime (usually renderD128)
-      - DRINODE=/dev/dri/renderD128
-      - DRI_NODE=/dev/dri/renderD128
+      # - DRINODE=/dev/dri/renderD128
+      # - DRI_NODE=/dev/dri/renderD128
     volumes:
       - /mnt/main/appdata/firefox/config:/config
     ports:
@@ -22,10 +22,35 @@ services:
       - 3201:3001
     shm_size: "1gb"
     restart: unless-stopped
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [compute, video, graphics, utility]
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [compute, video, graphics, utility]
+  # vpn:
+  #   image: thrnz/docker-wireguard-pia
+  #   container_name: firefox-pia
+  #   volumes:
+  #     - firefox-pia:/pia
+  #     - firefox-pia-shared:/pia-shared
+  #   cap_add:
+  #     - NET_ADMIN
+  #   # If the kernel module isn't available, mounting the tun device may be necessary for userspace implementations
+  #   #devices:
+  #   #- /dev/net/tun:/dev/net/tun
+  #   environment:
+  #     - LOC=swiss
+  #     - USER=${PIA_USERNAME}
+  #     - PASS=${PIA_PASSWORD}
+  #     - ACTIVE_HEALTHCHECKS=1
+  #   sysctls:
+  #     - net.ipv4.conf.all.src_valid_mark=1
+  #     - net.ipv6.conf.default.disable_ipv6=1
+  #     - net.ipv6.conf.all.disable_ipv6=1
+  #     - net.ipv6.conf.lo.disable_ipv6=1
+
+# volumes:
+#   firefox-pia:
+#   firefox-pia-shared:
