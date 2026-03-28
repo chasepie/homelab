@@ -1,12 +1,16 @@
 ---
 services:
+  # https://github.com/linuxserver/docker-firefox?tab=readme-ov-file#docker-compose-recommended-click-here-for-more-info
   firefox:
     image: lscr.io/linuxserver/firefox:latest
+    container_name: firefox
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
       - FIREFOX_CLI=https://www.linuxserver.io/ #optional
+
+      # https://github.com/linuxserver/docker-firefox?tab=readme-ov-file#hardware-acceleration--the-move-to-wayland
       - PIXELFLUX_WAYLAND=true
       # Ensure these point to the rendered node injected by the runtime (usually renderD128)
       - DRINODE=/dev/dri/renderD128
