@@ -9,7 +9,6 @@ services:
       - DB_NAME=romm
       - DB_USER=romm-user
       - DB_PASSWD=${MARIADB_PASSWORD}
-      - HASHEOUS_API_ENABLED=true
     volumes:
       - /mnt/main/appdata/romm/assets:/romm/assets
       - /mnt/main/appdata/romm/config:/romm/config
