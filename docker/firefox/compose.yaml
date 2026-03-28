@@ -1,0 +1,27 @@
+---
+services:
+  firefox:
+    image: lscr.io/linuxserver/firefox:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - FIREFOX_CLI=https://www.linuxserver.io/ #optional
+      - PIXELFLUX_WAYLAND=true
+      # Ensure these point to the rendered node injected by the runtime (usually renderD128)
+      - DRINODE=/dev/dri/renderD128
+      - DRI_NODE=/dev/dri/renderD128
+    volumes:
+      - /mnt/main/appdata/firefox/config:/config
+    ports:
+      - 3200:3000
+      - 3201:3001
+    shm_size: "1gb"
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [compute, video, graphics, utility]
