@@ -46,7 +46,7 @@ services:
     #devices:
     #- /dev/net/tun:/dev/net/tun
     environment:
-      - LOC=swiss
+      - LOC=${LOC:-us_michigan-pf}
       - USER=${PIA_USERNAME}
       - PASS=${PIA_PASSWORD}
       - ACTIVE_HEALTHCHECKS=1
