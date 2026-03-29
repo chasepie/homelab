@@ -17,6 +17,8 @@ services:
       INFERENCE_ENABLE_AUTO_TAGGING: true
       INFERENCE_ENABLE_AUTO_SUMMARIZATION: true
       OCR_USE_LLM: true
+      CRAWLER_FULL_PAGE_SCREENSHOT: true
+      CRAWLER_FULL_PAGE_ARCHIVE: true
       DATA_DIR: /data # DON'T CHANGE THIS
       DISABLE_SIGNUPS: true
     extra_hosts:
