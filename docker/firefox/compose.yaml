@@ -45,11 +45,12 @@ services:
     ports:
       - 3200:3000
       - 3201:3001
+    env_file:
+      - .env
     environment:
       - LOC=${LOC:-us_michigan-pf}
       - USER=${PIA_USERNAME}
       - PASS=${PIA_PASSWORD}
-      - LOCAL_NETWORK=${LOCAL_NETWORK:-}
       - ACTIVE_HEALTHCHECKS=1
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
