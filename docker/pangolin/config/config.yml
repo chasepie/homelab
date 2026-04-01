@@ -1,5 +1,5 @@
 app:
-  dashboard_url: "op://Dev/5tq45hipnmcywfk7gzzn66fh5u/URL"
+  dashboard_url: "op://Dev/Pangolin/Server/DASHBOARD_URL"
   anonymous_usage: false
 
 domains:
@@ -9,10 +9,10 @@ domains:
     prefer_wildcard_cert: true
 
 server:
-  secret: "op://Dev/5tq45hipnmcywfk7gzzn66fh5u/server secret"
+  secret: "op://Dev/Pangolin/Server/SERVER_SECRET"
 
 gerbil:
-  base_endpoint: "op://Dev/5tq45hipnmcywfk7gzzn66fh5u/base_endpoint"
+  base_endpoint: "op://Dev/Pangolin/Server/BASE_ENDPOINT"
 
 flags:
   require_email_verification: false
