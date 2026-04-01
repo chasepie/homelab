@@ -7,16 +7,8 @@ enabled = true
 ##
 
 [[server]]
-name = "Raspberry Pi 5 - 01 (Local)"
-[server.config]
-enabled = true
-
-##
-
-[[server]]
 name = "Raspberry Pi 5 - 02"
 [server.config]
-address = "https://rpi5-02.local:8120"
 enabled = true
 
 ##
@@ -24,7 +16,6 @@ enabled = true
 [[server]]
 name = "Raspberry Pi 5 - 03"
 [server.config]
-address = "https://rpi5-03.local:8120"
 enabled = true
 
 ##
@@ -32,7 +23,6 @@ enabled = true
 [[server]]
 name = "Unraid"
 [server.config]
-address = "https://unraid.local:8120"
 enabled = true
 
 ##
@@ -104,7 +94,6 @@ HEALTHCHECKS_URL=[[HEALTHCHECKS_PANGOLIN-VPS]]
 [[stack]]
 name = "healthchecks-rpi5-01"
 [stack.config]
-server = "Raspberry Pi 5 - 01 (Local)"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -213,7 +202,6 @@ run_directory = "docker/metube"
 [[stack]]
 name = "nginx-proxy-manager"
 [stack.config]
-server = "Raspberry Pi 5 - 01 (Local)"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -270,7 +258,6 @@ op inject -f -i compose.env -o .env
 [[stack]]
 name = "pi-hole-1"
 [stack.config]
-server = "Raspberry Pi 5 - 01 (Local)"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -338,7 +325,6 @@ op inject -f -i compose.env -o .env
 [[repo]]
 name = "homelab"
 [repo.config]
-server = "Raspberry Pi 5 - 01 (Local)"
 git_account = "chasepie"
 repo = "chasepie/homelab"
 
@@ -371,16 +357,8 @@ config.schedule = "Every day at 03:00"
 name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "GlobalAutoUpdate", execution.params = {}, enabled = true }
+  { execution.type = "GlobalAutoUpdate", execution.params.skip_auto_update = false, enabled = true }
 ]
-
-##
-
-[[builder]]
-name = "Local"
-[builder.config]
-type = "Server"
-params.server_id = "Raspberry Pi 5 - 01 (Local)"
 
 ##
 
