@@ -390,6 +390,15 @@ executions = [
 
 ##
 
+[[alerter]]
+name = "pushover"
+[alerter.config]
+enabled = true
+endpoint.type = "Pushover"
+endpoint.params.url = "https://api.pushover.net/1/messages.json?token=[[PUSHOVER_KOMODO_API_TOKEN]]&user=[[PUSHOVER_USER_KEY]]"
+
+##
+
 [[builder]]
 name = "Local"
 [builder.config]
