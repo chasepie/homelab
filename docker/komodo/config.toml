@@ -93,7 +93,7 @@ auto_update_all_services = true
 linked_repo = "homelab"
 run_directory = "docker/healthchecks"
 environment = """
-HEALTHCHECKS_URL=[[HEALTHCHECKS_PANGOLIN-VPS]]
+HEALTHCHECKS_URL=[[HEALTHCHECKS_PANGOLIN_VPS]]
 """
 
 ##
@@ -108,7 +108,7 @@ auto_update_all_services = true
 linked_repo = "homelab"
 run_directory = "docker/healthchecks"
 environment = """
-HEALTHCHECKS_URL=[[HEALTHCHECKS_RPI5-01]]
+HEALTHCHECKS_URL=[[HEALTHCHECKS_RPI5_01]]
 """
 
 ##
@@ -123,7 +123,7 @@ auto_update_all_services = true
 linked_repo = "homelab"
 run_directory = "docker/healthchecks"
 environment = """
-HEALTHCHECKS_URL=[[HEALTHCHECKS_RPI5-02]]
+HEALTHCHECKS_URL=[[HEALTHCHECKS_RPI5_02]]
 """
 
 ##
@@ -138,7 +138,7 @@ auto_update_all_services = true
 linked_repo = "homelab"
 run_directory = "docker/healthchecks"
 environment = """
-HEALTHCHECKS_URL=[[HEALTHCHECKS_RPI5-03]]
+HEALTHCHECKS_URL=[[HEALTHCHECKS_RPI5_03]]
 """
 
 ##
@@ -352,7 +352,7 @@ config.schedule = "Every day at 01:00"
 name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
+  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true },
 ]
 
 ##
@@ -368,7 +368,7 @@ config.schedule = "Every day at 03:00"
 name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "GlobalAutoUpdate", execution.params.skip_auto_update = false, enabled = true }
+  { execution.type = "GlobalAutoUpdate", execution.params.skip_auto_update = false, enabled = true },
 ]
 
 ##
@@ -384,7 +384,7 @@ config.schedule = "Every day at 06:00"
 name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "RotateAllServerKeys", execution.params = {}, enabled = true }
+  { execution.type = "RotateAllServerKeys", execution.params = {}, enabled = true },
 ]
 
 ##
