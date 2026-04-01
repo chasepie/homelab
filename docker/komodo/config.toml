@@ -1,4 +1,11 @@
 [[server]]
+name = "Local"
+[server.config]
+enabled = true
+
+##
+
+[[server]]
 name = "Pangolin VPS"
 [server.config]
 address = "https://pangolin.chasepie.com:8120"
@@ -94,6 +101,7 @@ HEALTHCHECKS_URL=[[HEALTHCHECKS_PANGOLIN-VPS]]
 [[stack]]
 name = "healthchecks-rpi5-01"
 [stack.config]
+server = "Local"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -202,6 +210,7 @@ run_directory = "docker/metube"
 [[stack]]
 name = "nginx-proxy-manager"
 [stack.config]
+server = "Local"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -258,6 +267,7 @@ op inject -f -i compose.env -o .env
 [[stack]]
 name = "pi-hole-1"
 [stack.config]
+server = "Local"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -325,6 +335,7 @@ op inject -f -i compose.env -o .env
 [[repo]]
 name = "homelab"
 [repo.config]
+server = "Local"
 git_account = "chasepie"
 repo = "chasepie/homelab"
 
@@ -359,6 +370,30 @@ enabled = true
 executions = [
   { execution.type = "GlobalAutoUpdate", execution.params.skip_auto_update = false, enabled = true }
 ]
+
+##
+
+[[procedure]]
+name = "Rotate Server Keys"
+description = "Rotates all currently connected Server keys."
+tags = ["system"]
+config.schedule_alert = false
+config.schedule = "Every day at 06:00"
+
+[[procedure.config.stage]]
+name = "Stage 1"
+enabled = true
+executions = [
+  { execution.type = "RotateAllServerKeys", execution.params = {}, enabled = true }
+]
+
+##
+
+[[builder]]
+name = "Local"
+[builder.config]
+type = "Server"
+params.server_id = "Local"
 
 ##
 
