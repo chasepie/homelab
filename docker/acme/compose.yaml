@@ -12,8 +12,6 @@ services:
     restart: unless-stopped
     volumes:
       - acme_certs:/acme.sh
-    env_file:
-      - .env
     environment:
       - PORKBUN_API_KEY=${PORKBUN_API_KEY}
       - PORKBUN_SECRET_API_KEY=${PORKBUN_SECRET_API_KEY}
