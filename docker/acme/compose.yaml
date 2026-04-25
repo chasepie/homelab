@@ -1,0 +1,19 @@
+# Run this command to issue a certificate for DOMAIN.com and *.DOMAIN.com using the dns_porkbun plugin with Let's Encrypt as the CA:
+# docker compose run --rm acme --issue --dns dns_porkbun -d DOMAIN.com -d "*.DOMAIN.com" --server letsencrypt
+
+services:
+  acme:
+    image: neilpang/acme.sh
+    container_name: acme
+    restart: unless-stopped
+    volumes:
+      - ./certs:/acme.sh
+    env_file:
+      - .env
+    environment:
+      - PORKBUN_API_KEY=${PORKBUN_API_KEY}
+      - PORKBUN_SECRET_API_KEY=${PORKBUN_SECRET_API_KEY}
+    command: daemon
+
+volumes:
+  acme_certs:
