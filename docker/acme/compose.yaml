@@ -11,7 +11,7 @@ services:
     container_name: acme
     restart: unless-stopped
     volumes:
-      - acme_certs:/acme.sh
+      - acme_certs:/etc/acme
     environment:
       - PORKBUN_API_KEY=${PORKBUN_API_KEY}
       - PORKBUN_SECRET_API_KEY=${PORKBUN_SECRET_API_KEY}
