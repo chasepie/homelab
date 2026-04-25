@@ -48,6 +48,22 @@ run_directory = "docker/1password"
 ##
 
 [[stack]]
+name = "acme"
+[stack.config]
+server = "Pangolin VPS"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/acme"
+environment = """
+PORKBUN_API_KEY=[[PORKBUN_API_KEY]]
+PORKBUN_SECRET_API_KEY=[[PORKBUN_SECRET_API_KEY]]
+"""
+
+##
+
+[[stack]]
 name = "actual-budget"
 [stack.config]
 server = "Unraid"
