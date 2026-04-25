@@ -59,6 +59,8 @@ services:
       ## Optionally mount custom root CA certificate to trust
       # - /path/to/root_ca.crt:/usr/local/share/ca-certificates/root_ca.crt
       - /usr/bin/op:/usr/bin/op
+      ## Mount acme.sh cert volume so Let's Encrypt certs are accessible
+      # - acme_certs:/etc/acme:ro
 
 volumes:
   keys:
