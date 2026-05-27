@@ -349,6 +349,23 @@ op inject -f -i compose.env -o .env
 
 ##
 
+[[stack]]
+name = "sparky-fitness"
+[stack.config]
+server = "Unraid"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/sparky-fitness"
+pre_deploy.command = """
+export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
+export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
+op inject -f -i compose.env -o .env
+"""
+
+##
+
 [[repo]]
 name = "homelab"
 [repo.config]
