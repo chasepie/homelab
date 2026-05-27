@@ -1,4 +1,5 @@
 .env
 *credentials.json
 .DS_Store
+.ansible/
 certs/

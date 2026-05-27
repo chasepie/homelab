@@ -1,0 +1,7 @@
+[servers]
+server-01 ansible_host=server-01.local
+server-02 ansible_host=server-02.local
+
+[servers:vars]
+ansible_user=your_user
+ansible_python_interpreter=/usr/bin/python3

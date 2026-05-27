@@ -1,0 +1,17 @@
+services:
+  semaphore:
+    image: semaphoreui/semaphore:latest
+    container_name: semaphore-ui
+    ports:
+      - 3000:3000
+    environment:
+      SEMAPHORE_DB_DIALECT: sqlite
+      SEMAPHORE_SCHEDULE_TIMEZONE: "America/New_York"
+      SEMAPHORE_TOTP_ENABLED: "True"
+      SEMAPHORE_TOTP_ALLOW_RECOVERY: "True"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/var/lib/semaphore
+      - ./config:/etc/semaphore
+      - ./tmp:/tmp/semaphore

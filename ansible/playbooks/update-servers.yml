@@ -1,0 +1,14 @@
+- name: Update Linux servers
+  hosts: all
+  become: true
+  tasks:
+    - name: Update packages
+      ansible.builtin.include_tasks: ../tasks/update-packages.yml
+
+    - name: Update Komodo services
+      ansible.builtin.include_tasks: ../tasks/update-docker-compose.yml
+      loop:
+        - /srv/docker/komodo
+        - /srv/docker/komodo-periphery
+      loop_control:
+        loop_var: compose_dir

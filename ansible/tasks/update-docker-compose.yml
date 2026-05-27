@@ -1,0 +1,11 @@
+- name: Check if compose directory exists - {{ compose_dir }}
+  ansible.builtin.stat:
+    path: "{{ compose_dir }}"
+  register: compose_dir_stat
+
+- name: Update docker compose service - {{ compose_dir }}
+  community.docker.docker_compose_v2:
+    project_src: "{{ compose_dir }}"
+    pull: always
+    state: present
+  when: compose_dir_stat.stat.exists
