@@ -1,0 +1,20 @@
+- name: Update packages (RHEL/CentOS/Fedora)
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+    update_only: true
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Check if reboot is required (RHEL/CentOS/Fedora)
+  ansible.builtin.command: needs-restarting -r
+  register: reboot_required_rhel
+  failed_when: reboot_required_rhel.rc > 1
+  changed_when: false
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Reboot if required (RHEL/CentOS/Fedora)
+  ansible.builtin.reboot:
+    msg: "Reboot triggered by Ansible update playbook"
+  when:
+    - ansible_facts['os_family'] == "RedHat"
+    - reboot_required_rhel.rc == 1

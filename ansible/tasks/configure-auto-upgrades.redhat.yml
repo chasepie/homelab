@@ -1,0 +1,21 @@
+- name: Install dnf-automatic and dnf-utils (RHEL/Fedora)
+  ansible.builtin.dnf:
+    name:
+      - dnf-automatic
+      - dnf-utils
+    state: present
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Configure dnf-automatic to apply updates (RHEL/Fedora)
+  ansible.builtin.lineinfile:
+    path: /etc/dnf/automatic.conf
+    regexp: '^apply_updates\s*='
+    line: "apply_updates = yes"
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Enable dnf-automatic timer (RHEL/Fedora)
+  ansible.builtin.systemd:
+    name: dnf-automatic.timer
+    enabled: true
+    state: started
+  when: ansible_facts['os_family'] == "RedHat"

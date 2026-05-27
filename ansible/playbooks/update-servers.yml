@@ -2,8 +2,11 @@
   hosts: all
   become: true
   tasks:
+    - name: Configure automatic package upgrades
+      ansible.builtin.include_tasks: ../tasks/configure-auto-upgrades.debian.yml
+
     - name: Update packages
-      ansible.builtin.include_tasks: ../tasks/update-packages.yml
+      ansible.builtin.include_tasks: ../tasks/update-packages.debian.yml
 
     - name: Update Komodo services
       ansible.builtin.include_tasks: ../tasks/update-docker-compose.yml

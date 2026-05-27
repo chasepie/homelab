@@ -1,0 +1,18 @@
+- name: Install unattended-upgrades (Debian/Ubuntu)
+  ansible.builtin.apt:
+    name: unattended-upgrades
+    state: present
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Enable unattended-upgrades (Debian/Ubuntu)
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    content: |
+      // Run `apt-get update` daily to refresh the package list.
+      APT::Periodic::Update-Package-Lists "1";
+      // Run `unattended-upgrades` daily to apply available updates.
+      APT::Periodic::Unattended-Upgrade "1";
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_facts['os_family'] == "Debian"

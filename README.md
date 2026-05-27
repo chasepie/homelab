@@ -50,10 +50,10 @@ Docker Compose configurations for my self-hosted homelab infrastructure, managed
 │  │Nginx Proxy│  │  Pi-hole  │  │     Komodo        │            │
 │  │  Manager  │  │           │  │  (infra mgmt)     │            │
 │  └───────────┘  └───────────┘  └───────────────────┘            │
-│  ┌───────────┐  ┌───────────────────┐                           │
-│  │Healthchks │  │  Semaphore UI     │                           │
-│  │           │  │  (Ansible UI)     │                           │
-│  └───────────┘  └───────────────────┘                           │
+│  ┌───────────┐                                                  │
+│  │Healthchks │                                                  │
+│  │           │                                                  │
+│  └───────────┘                                                  │
 └─────────────────────────────────────────────────────────────────┘
 ┌─────────────────────────────────────────────────────────────────┐
 │  Raspberry Pi 02                                                │
@@ -113,7 +113,6 @@ Docker Compose configurations for my self-hosted homelab infrastructure, managed
 | [Grafana + Loki](https://grafana.com/oss/loki/)          | `docker/grafana-loki/`     | Log aggregation (Loki), visualization (Grafana), and collection (Alloy) stack with OpenTelemetry support. |
 | [Healthchecks](https://healthchecks.io/)                 | `docker/healthchecks/`     | Cron/scheduled task ping monitoring. Deployed on all hosts for uptime visibility.                         |
 | [Uptime Kuma](https://github.com/louislam/uptime-kuma)   | `docker/uptime-kuma/`      | Uptime monitoring and status page running on the Pangolin VPS.                                            |
-| [Semaphore UI](https://semaphoreui.com/)                 | `docker/semaphore-ui/`     | Web UI for running and scheduling Ansible playbooks.                                                      |
 | [Site Checker](https://github.com/chasepie/site-checker) | `docker/site-checker/`     | Multi-network site monitoring with headless Chrome, including a PIA VPN exit for geo-testing.             |
 
 ### Networking & Security

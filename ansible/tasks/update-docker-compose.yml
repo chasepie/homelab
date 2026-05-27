@@ -6,6 +6,6 @@
 - name: Update docker compose service - {{ compose_dir }}
   community.docker.docker_compose_v2:
     project_src: "{{ compose_dir }}"
-    pull: always
+    pull: policy
     state: present
   when: compose_dir_stat.stat.exists

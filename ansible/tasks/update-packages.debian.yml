@@ -6,22 +6,15 @@
     autoclean: true
   when: ansible_facts['os_family'] == "Debian"
 
-- name: Update packages (RHEL/CentOS/Fedora)
-  ansible.builtin.dnf:
-    name: "*"
-    state: latest
-    update_only: true
-  when: ansible_facts['os_family'] == "RedHat"
-
 - name: Check if reboot is required (Debian/Ubuntu)
   ansible.builtin.stat:
     path: /var/run/reboot-required
-  register: reboot_required
+  register: reboot_required_debian
   when: ansible_facts['os_family'] == "Debian"
 
-- name: Reboot if required
+- name: Reboot if required (Debian/Ubuntu)
   ansible.builtin.reboot:
     msg: "Reboot triggered by Ansible update playbook"
   when:
     - ansible_facts['os_family'] == "Debian"
-    - reboot_required.stat.exists
+    - reboot_required_debian.stat.exists
