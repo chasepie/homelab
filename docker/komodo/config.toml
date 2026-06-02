@@ -77,6 +77,7 @@ export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
 export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
 op inject -f -i compose.env -o .env
 """
+pre_deploy.shell_mode = false
 
 ##
 
@@ -94,6 +95,7 @@ export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
 export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
 op inject -f -i compose.env -o .env
 """
+pre_deploy.shell_mode = false
 environment = """
 LOCAL_NETWORK=192.168.70.0/24
 """
@@ -189,6 +191,7 @@ export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
 export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
 op inject -f -i compose.env -o .env
 """
+pre_deploy.shell_mode = false
 
 ##
 
@@ -206,9 +209,29 @@ export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
 export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
 op inject -f -i compose.env -o .env
 """
+pre_deploy.shell_mode = false
 environment = """
 DISABLE_SIGNUPS=true
 """
+
+##
+
+[[stack]]
+name = "komodo-core"
+[stack.config]
+server = "Local"
+poll_for_updates = true
+files_on_host = true
+run_directory = "/srv/docker/komodo/"
+
+##
+
+[[stack]]
+name = "komodo-periphery-rpi5-02"
+[stack.config]
+server = "Raspberry Pi 5 - 02"
+files_on_host = true
+run_directory = "/srv/docker/komodo-periphery"
 
 ##
 
@@ -278,6 +301,7 @@ export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
 export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
 op inject -f -i compose.env -o .env
 """
+pre_deploy.shell_mode = false
 
 ##
 
@@ -295,6 +319,7 @@ export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
 export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
 op inject -f -i compose.env -o .env
 """
+pre_deploy.shell_mode = false
 
 ##
 
@@ -312,6 +337,7 @@ export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
 export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
 op inject -f -i compose.env -o .env
 """
+pre_deploy.shell_mode = false
 
 ##
 
@@ -329,6 +355,7 @@ export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
 export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
 op inject -f -i compose.env -o .env
 """
+pre_deploy.shell_mode = false
 
 ##
 
@@ -337,6 +364,8 @@ name = "site-checker"
 [stack.config]
 server = "Unraid"
 poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
 linked_repo = "homelab"
 run_directory = "docker/site-checker"
 registry_provider = "ghcr.io"
@@ -346,6 +375,7 @@ export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
 export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
 op inject -f -i compose.env -o .env
 """
+pre_deploy.shell_mode = false
 
 ##
 
@@ -363,6 +393,7 @@ export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
 export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
 op inject -f -i compose.env -o .env
 """
+pre_deploy.shell_mode = false
 
 ##
 
@@ -436,7 +467,7 @@ endpoint.params.url = "https://api.pushover.net/1/messages.json?token=[[PUSHOVER
 name = "Local"
 [builder.config]
 type = "Server"
-params.server_id = "Local"
+params.server = "Local"
 
 ##
 
