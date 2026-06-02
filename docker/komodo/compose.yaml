@@ -59,12 +59,6 @@ services:
       - keys:/config/keys
       ## Store dated backups of the database - https://komo.do/docs/setup/backup
       - ${COMPOSE_KOMODO_BACKUPS_PATH}:/backups
-      ## Store sync files on server
-      # - /path/to/syncs:/syncs
-      ## Optionally mount a custom core.config.toml
-      # - /path/to/core.config.toml:/config/config.toml
-      ## Optionally mount custom root CA certificate to trust
-      # - /path/to/root_ca.crt:/usr/local/share/ca-certificates/root_ca.crt
 
   ## Deploy Periphery container using this block,
   ## or deploy the Periphery binary with systemd using
@@ -85,16 +79,11 @@ services:
       ## Allow Periphery to see processes outside of container
       - /proc:/proc
       ## Specify the Periphery agent root directory.
-      ## All your configs / repos must be children of this directory for Periphery to be able to see it.
-      ## Must be the same inside and outside the container,
-      ## or docker will get confused. See https://github.com/moghtech/komodo/discussions/180.
-      ## Default: /etc/komodo.
       - ${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}:${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}
-      ## Optionally mount a custom periphery.config.toml
-      # - /path/to/periphery.config.toml:/config/config.toml
-      ## Optionally mount custom root CA certificate to trust
-      # - /path/to/root_ca.crt:/usr/local/share/ca-certificates/root_ca.crt
+      ## Mount 1Password CLI binary for vault access
       - /usr/bin/op:/usr/bin/op
+      ## Mount compose file directory so Komodo can see it
+      - /srv/docker/komodo-periphery:/srv/docker/komodo-periphery:ro
 
 volumes:
   # Postgres

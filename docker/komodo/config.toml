@@ -227,15 +227,6 @@ run_directory = "/srv/docker/komodo/"
 ##
 
 [[stack]]
-name = "komodo-periphery-rpi5-02"
-[stack.config]
-server = "Raspberry Pi 5 - 02"
-files_on_host = true
-run_directory = "/srv/docker/komodo-periphery"
-
-##
-
-[[stack]]
 name = "metube"
 [stack.config]
 server = "Unraid"
@@ -417,7 +408,7 @@ config.schedule = "Every day at 01:00"
 name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
+  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true },
 ]
 
 ##
@@ -433,7 +424,7 @@ config.schedule = "Every day at 03:00"
 name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "GlobalAutoUpdate", execution.params.skip_auto_update = false, enabled = true }
+  { execution.type = "GlobalAutoUpdate", execution.params.skip_auto_update = false, enabled = true },
 ]
 
 ##
@@ -449,7 +440,7 @@ config.schedule = "Every day at 06:00"
 name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "RotateAllServerKeys", execution.params = {}, enabled = true }
+  { execution.type = "RotateAllServerKeys", execution.params = {}, enabled = true },
 ]
 
 ##

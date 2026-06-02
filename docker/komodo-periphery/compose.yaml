@@ -50,15 +50,11 @@ services:
       ## Allow Periphery to see processes outside of container
       - /proc:/proc
       ## Specify the Periphery agent root directory.
-      ## Must be the same inside and outside the container,
-      ## or docker will get confused. See https://github.com/moghtech/komodo/discussions/180.
-      ## Default: /etc/komodo.
       - ${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}:${PERIPHERY_ROOT_DIRECTORY:-/etc/komodo}
-      ## Optionally mount a custom periphery.config.toml
-      # - /path/to/periphery.config.toml:/config/config.toml
-      ## Optionally mount custom root CA certificate to trust
-      # - /path/to/root_ca.crt:/usr/local/share/ca-certificates/root_ca.crt
+      ## Mount 1Password CLI binary for vault access
       - /usr/bin/op:/usr/bin/op
+      ## Mount compose file directory so Komodo can see it
+      - /srv/docker/komodo:/srv/docker/komodo:ro
       ## Mount acme.sh cert volume so Let's Encrypt certs are accessible
       # - acme_certs:/etc/acme:ro
 
