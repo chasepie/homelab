@@ -10,8 +10,8 @@ services:
     environment:
       - TZ=America/Detroit
     volumes:
-      - /mnt/main/appdata/nginx-proxy-manager/data:/data
-      - /mnt/main/appdata/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+      - /srv/docker/nginx-proxy-manager/data:/data
+      - /srv/docker/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
     healthcheck:
       test: ["CMD", "/usr/bin/check-health"]
       interval: 10s
