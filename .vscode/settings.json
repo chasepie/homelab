@@ -1,0 +1,3 @@
+{
+    "ansible.playbook.arguments": "-i ansible/inventory/hosts.ini"
+}
