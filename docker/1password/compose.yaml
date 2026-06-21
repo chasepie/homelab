@@ -6,7 +6,7 @@ services:
     ports:
       - "8380:8080"
     volumes:
-      - /mnt/main/appdata/1password/1password-credentials.json:/home/opuser/.op/1password-credentials.json
+      - /srv/docker/1password/1password-credentials.json:/home/opuser/.op/1password-credentials.json
       - 1password-data:/home/opuser/.op/data
 
   op-connect-sync:
@@ -16,7 +16,7 @@ services:
     ports:
       - "8381:8080"
     volumes:
-      - /mnt/main/appdata/1password/1password-credentials.json:/home/opuser/.op/1password-credentials.json
+      - /srv/docker/1password/1password-credentials.json:/home/opuser/.op/1password-credentials.json
       - 1password-data:/home/opuser/.op/data
 
 volumes:
