@@ -38,7 +38,7 @@ enabled = true
 [[stack]]
 name = "1password-connect"
 [stack.config]
-server = "Unraid"
+server = "Local"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -282,7 +282,7 @@ PORKBUN_SECRET_API_KEY=[[PORKBUN_SECRET_API_KEY]]
 [[stack]]
 name = "pangolin-newt-ddvm"
 [stack.config]
-server = "Unraid"
+server = "Local"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
