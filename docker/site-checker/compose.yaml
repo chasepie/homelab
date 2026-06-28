@@ -3,9 +3,6 @@ services:
     image: ghcr.io/chasepie/site-checker-personal:latest
     container_name: site-checker
     restart: unless-stopped
-    networks:
-      - default
-      - pangolin
     ports:
       - "8080:8080"
     env_file:
@@ -69,7 +66,3 @@ services:
     command: >
       /bin/bash -c "[ -f /pia/loc.txt ] || echo 'us_michigan-pf' > /pia/loc.txt
       && LOC=$(cat /pia/loc.txt) /scripts/run"
-
-networks:
-  pangolin:
-    external: true

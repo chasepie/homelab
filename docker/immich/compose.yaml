@@ -22,9 +22,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/remotes/unas-pro/photos:/mnt/unas-pro/photos
     env_file: .env
-    networks:
-      - default
-      - pangolin
     ports:
       - "2283:2283"
     depends_on:
@@ -74,7 +71,3 @@ services:
     restart: unless-stopped
     healthcheck:
       disable: false
-
-networks:
-  pangolin:
-    external: true
