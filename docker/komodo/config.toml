@@ -1,15 +1,15 @@
 [[server]]
-name = "Local"
+name = "Pangolin VPS"
 [server.config]
+address = "https://pangolin.chasepie.com:8120"
+insecure_tls = false
 enabled = true
 
 ##
 
 [[server]]
-name = "Pangolin VPS"
+name = "Raspberry Pi 5 - 01"
 [server.config]
-address = "https://pangolin.chasepie.com:8120"
-insecure_tls = false
 enabled = true
 
 ##
@@ -38,7 +38,7 @@ enabled = true
 [[stack]]
 name = "1password-connect"
 [stack.config]
-server = "Local"
+server = "Raspberry Pi 5 - 01"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -120,7 +120,7 @@ HEALTHCHECKS_URL=[[HEALTHCHECKS_PANGOLIN_VPS]]
 [[stack]]
 name = "healthchecks-rpi5-01"
 [stack.config]
-server = "Local"
+server = "Raspberry Pi 5 - 01"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -219,7 +219,7 @@ DISABLE_SIGNUPS=true
 [[stack]]
 name = "komodo-core"
 [stack.config]
-server = "Local"
+server = "Raspberry Pi 5 - 01"
 project_name = "komodo"
 poll_for_updates = true
 files_on_host = true
@@ -242,7 +242,7 @@ run_directory = "docker/metube"
 [[stack]]
 name = "nginx-proxy-manager"
 [stack.config]
-server = "Local"
+server = "Raspberry Pi 5 - 01"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -282,7 +282,7 @@ PORKBUN_SECRET_API_KEY=[[PORKBUN_SECRET_API_KEY]]
 [[stack]]
 name = "pangolin-newt-ddvm"
 [stack.config]
-server = "Local"
+server = "Raspberry Pi 5 - 01"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -300,7 +300,7 @@ pre_deploy.shell_mode = false
 [[stack]]
 name = "pi-hole-1"
 [stack.config]
-server = "Local"
+server = "Raspberry Pi 5 - 01"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -392,7 +392,7 @@ pre_deploy.shell_mode = false
 [[repo]]
 name = "homelab"
 [repo.config]
-server = "Local"
+server = "Raspberry Pi 5 - 01"
 git_account = "chasepie"
 repo = "chasepie/homelab"
 
@@ -459,7 +459,7 @@ endpoint.params.url = "https://api.pushover.net/1/messages.json?token=[[PUSHOVER
 name = "Local"
 [builder.config]
 type = "Server"
-params.server = "Local"
+params.server = "Raspberry Pi 5 - 01"
 
 ##
 
