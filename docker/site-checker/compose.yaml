@@ -16,9 +16,9 @@ services:
       - BROWSERLESS_URL_VPN=ws://vpn:3000
       - VPN_CHANGE_INTERVAL=10
     volumes:
-      - /mnt/main/appdata/site-checker/data:/app/data
-      - /mnt/main/appdata/site-checker/logs:/app/logs
-      - /mnt/main/appdata/site-checker/pia:/pia
+      - /srv/docker/site-checker/data:/app/data
+      - /srv/docker/site-checker/logs:/app/logs
+      - /srv/docker/site-checker/pia:/pia
       - /var/run/docker.sock:/var/run/docker.sock:ro
     depends_on:
       - browserless
@@ -51,7 +51,7 @@ services:
     container_name: site-checker-vpn
     restart: unless-stopped
     volumes:
-      - /mnt/main/appdata/site-checker/pia:/pia
+      - /srv/docker/site-checker/pia:/pia
     cap_add:
       - NET_ADMIN
     devices:

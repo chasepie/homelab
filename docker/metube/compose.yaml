@@ -6,4 +6,4 @@ services:
     ports:
       - "8081:8081"
     volumes:
-      - /mnt/main/appdata/metube/downloads:/downloads
+      - /srv/docker/metube/downloads:/downloads
