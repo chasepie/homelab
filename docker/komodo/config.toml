@@ -1,13 +1,4 @@
 [[server]]
-name = "Pangolin VPS"
-[server.config]
-address = "https://pangolin.chasepie.com:8120"
-insecure_tls = false
-enabled = true
-
-##
-
-[[server]]
 name = "Raspberry Pi 5 - 01"
 [server.config]
 enabled = true
@@ -48,22 +39,6 @@ run_directory = "docker/1password"
 ##
 
 [[stack]]
-name = "acme"
-[stack.config]
-server = "Pangolin VPS"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-linked_repo = "homelab"
-run_directory = "docker/acme"
-environment = """
-PORKBUN_API_KEY=[[PORKBUN_API_KEY]]
-PORKBUN_SECRET_API_KEY=[[PORKBUN_SECRET_API_KEY]]
-"""
-
-##
-
-[[stack]]
 name = "actual-budget"
 [stack.config]
 server = "Unraid"
@@ -98,21 +73,6 @@ op inject -f -i compose.env -o .env
 pre_deploy.shell_mode = false
 environment = """
 LOCAL_NETWORK=192.168.70.0/24
-"""
-
-##
-
-[[stack]]
-name = "healthchecks-pangolin-vps"
-[stack.config]
-server = "Pangolin VPS"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-linked_repo = "homelab"
-run_directory = "docker/healthchecks"
-environment = """
-HEALTHCHECKS_URL=[[HEALTHCHECKS_PANGOLIN_VPS]]
 """
 
 ##
@@ -260,40 +220,6 @@ auto_update = true
 auto_update_all_services = true
 linked_repo = "homelab"
 run_directory = "docker/open-webui"
-
-##
-
-[[stack]]
-name = "pangolin"
-[stack.config]
-server = "Pangolin VPS"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-linked_repo = "homelab"
-run_directory = "docker/pangolin"
-environment = """
-PORKBUN_API_KEY=[[PORKBUN_API_KEY]]
-PORKBUN_SECRET_API_KEY=[[PORKBUN_SECRET_API_KEY]]
-"""
-
-##
-
-[[stack]]
-name = "pangolin-newt-ddvm"
-[stack.config]
-server = "Raspberry Pi 5 - 01"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-linked_repo = "homelab"
-run_directory = "docker/pangolin-newt"
-pre_deploy.command = """
-export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
-export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
-op inject -f -i compose.env -o .env
-"""
-pre_deploy.shell_mode = false
 
 ##
 
