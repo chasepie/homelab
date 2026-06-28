@@ -4,7 +4,7 @@ services:
     container_name: karakeep
     restart: unless-stopped
     volumes:
-      - /srv/docker/karakeep/data:/data
+      - /mnt/main/appdata/karakeep/data:/data
     ports:
       - 3000:3000
     env_file: .env
@@ -43,4 +43,4 @@ services:
     environment:
       MEILI_NO_ANALYTICS: "true"
     volumes:
-      - /srv/docker/karakeep/meilisearch:/meili_data
+      - /mnt/main/appdata/karakeep/meilisearch:/meili_data
