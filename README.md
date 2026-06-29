@@ -119,4 +119,11 @@ Ansible playbooks for automating server management are in the [`ansible/`](ansib
 
 ## Secrets Management
 
-Secrets are managed through [1Password Connect](https://developer.1password.com/docs/connect/) and the 1Password CLI (`op`). Services reference secrets via `op://` URIs which are resolved at container startup. See [unraid/README.md](unraid/README.md) for 1Password CLI installation on Unraid.
+Secrets are managed through [1Password Connect](https://developer.1password.com/docs/connect/) and the 1Password CLI (`op`). Services reference secrets via `op://` URIs which are resolved at container startup. See [docs/hosts/unraid.md](docs/hosts/unraid.md) for 1Password CLI installation on Unraid.
+
+## Host Setup
+
+Host-specific setup notes live in [docs/hosts/](docs/hosts/):
+
+- [docs/hosts/unraid.md](docs/hosts/unraid.md) — 1Password CLI installation on Unraid.
+- [docs/hosts/raspberry-pi.md](docs/hosts/raspberry-pi.md) — Raspberry Pi notes, including mounting a CIFS/SMB network share.

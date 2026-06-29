@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-Declarative configuration for a self-hosted homelab: Docker Compose stacks under [docker/](docker/), Ansible automation under [ansible/](ansible/), and host-specific notes under [unraid/](unraid/). There is no application code to build, lint, or test — changes are configuration that gets deployed to physical hosts.
+Declarative configuration for a self-hosted homelab: Docker Compose stacks under [docker/](docker/), Ansible automation under [ansible/](ansible/), and host-specific setup notes under [docs/hosts/](docs/hosts/). There is no application code to build, lint, or test — changes are configuration that gets deployed to physical hosts.
 
 Deployment is orchestrated by [Komodo](https://komo.do/) (running on a Raspberry Pi) which pulls this repo and dispatches stacks to Komodo Periphery agents on each host (Pangolin VPS, Unraid server, three Raspberry Pis). The host that runs each stack is documented in the topology diagram in [README.md](README.md).
 
@@ -45,4 +45,4 @@ Playbook structure: top-level files in [ansible/playbooks/](ansible/playbooks/) 
 
 ## Secrets
 
-Managed via [1Password Connect](https://developer.1password.com/docs/connect/) ([docker/1password/](docker/1password/)) and the `op` CLI on each host. Unraid needs the CLI installed manually — see [unraid/README.md](unraid/README.md).
+Managed via [1Password Connect](https://developer.1password.com/docs/connect/) ([docker/1password/](docker/1password/)) and the `op` CLI on each host. Unraid needs the CLI installed manually — see [docs/hosts/unraid.md](docs/hosts/unraid.md).
