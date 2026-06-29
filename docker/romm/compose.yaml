@@ -10,11 +10,11 @@ services:
       - DB_USER=romm-user
       - DB_PASSWD=${MARIADB_PASSWORD}
     volumes:
-      - /mnt/main/appdata/romm/assets:/romm/assets
-      - /mnt/main/appdata/romm/config:/romm/config
-      - /mnt/main/appdata/romm/romm_redis_data:/redis-data
-      - /mnt/main/appdata/romm/romm_resources:/romm/resources
-      - /mnt/remotes/unas-pro/unraid/romm-library:/romm/library
+      - /srv/docker/romm/assets:/romm/assets
+      - /srv/docker/romm/config:/romm/config
+      - /srv/docker/romm/romm_redis_data:/redis-data
+      - /srv/docker/romm/romm_resources:/romm/resources
+      - /mnt/unas-pro/romm-library:/romm/library
     ports:
       - 8280:8080
     depends_on:
@@ -31,7 +31,7 @@ services:
       - MARIADB_DATABASE=romm
       - MARIADB_USER=romm-user
     volumes:
-      - /mnt/main/appdata/romm/mysql_data:/var/lib/mysql
+      - /srv/docker/romm/mysql_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       start_period: 30s
