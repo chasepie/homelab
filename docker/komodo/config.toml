@@ -1,5 +1,5 @@
 [[server]]
-name = "Raspberry Pi 5 - 01"
+name = "Local"
 [server.config]
 enabled = true
 
@@ -29,7 +29,7 @@ enabled = true
 [[stack]]
 name = "1password-connect"
 [stack.config]
-server = "Raspberry Pi 5 - 01"
+server = "Local"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -57,30 +57,9 @@ pre_deploy.shell_mode = false
 ##
 
 [[stack]]
-name = "firefox"
-[stack.config]
-server = "Unraid"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-linked_repo = "homelab"
-run_directory = "docker/firefox"
-pre_deploy.command = """
-export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
-export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
-op inject -f -i compose.env -o .env
-"""
-pre_deploy.shell_mode = false
-environment = """
-LOCAL_NETWORK=192.168.70.0/24
-"""
-
-##
-
-[[stack]]
 name = "healthchecks-rpi5-01"
 [stack.config]
-server = "Raspberry Pi 5 - 01"
+server = "Local"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -179,7 +158,7 @@ DISABLE_SIGNUPS=true
 [[stack]]
 name = "komodo-core"
 [stack.config]
-server = "Raspberry Pi 5 - 01"
+server = "Local"
 project_name = "komodo"
 poll_for_updates = true
 files_on_host = true
@@ -202,7 +181,7 @@ run_directory = "docker/metube"
 [[stack]]
 name = "nginx-proxy-manager"
 [stack.config]
-server = "Raspberry Pi 5 - 01"
+server = "Local"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -212,21 +191,9 @@ run_directory = "docker/nginx-proxy-manager"
 ##
 
 [[stack]]
-name = "open-webui"
-[stack.config]
-server = "Unraid"
-poll_for_updates = true
-auto_update = true
-auto_update_all_services = true
-linked_repo = "homelab"
-run_directory = "docker/open-webui"
-
-##
-
-[[stack]]
 name = "pi-hole-1"
 [stack.config]
-server = "Raspberry Pi 5 - 01"
+server = "Local"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -262,7 +229,7 @@ pre_deploy.shell_mode = false
 [[stack]]
 name = "romm"
 [stack.config]
-server = "Unraid"
+server = "Local"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -318,7 +285,7 @@ pre_deploy.shell_mode = false
 [[repo]]
 name = "homelab"
 [repo.config]
-server = "Raspberry Pi 5 - 01"
+server = "Local"
 git_account = "chasepie"
 repo = "chasepie/homelab"
 
@@ -385,7 +352,7 @@ endpoint.params.url = "https://api.pushover.net/1/messages.json?token=[[PUSHOVER
 name = "Local"
 [builder.config]
 type = "Server"
-params.server = "Raspberry Pi 5 - 01"
+params.server = "Local"
 
 ##
 
