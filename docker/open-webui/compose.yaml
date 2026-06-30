@@ -14,5 +14,5 @@ services:
               capabilities:
                 - gpu
     volumes:
-      - /mnt/main/appdata/ollama:/root/.ollama
-      - /mnt/main/appdata/open-webui:/app/backend/data
+      - /srv/docker/ollama:/root/.ollama
+      - /srv/docker/open-webui:/app/backend/data

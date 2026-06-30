@@ -13,14 +13,13 @@ services:
   immich-server:
     container_name: immich-server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
-    extends:
-      file: hwaccel.transcoding.yml
-      service: nvenc # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
+    # extends:
+    #   file: hwaccel.transcoding.yml
+    #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
     volumes:
       # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
       - ${UPLOAD_LOCATION}:/data
       - /etc/localtime:/etc/localtime:ro
-      - /mnt/remotes/unas-pro/photos:/mnt/unas-pro/photos
     env_file: .env
     ports:
       - "2283:2283"
@@ -35,12 +34,12 @@ services:
     container_name: immich-machine-learning
     # For hardware acceleration, add one of -[armnn, cuda, rocm, openvino, rknn] to the image tag.
     # Example tag: ${IMMICH_VERSION:-release}-cuda
-    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}-cuda
-    extends: # uncomment this section for hardware acceleration - see https://docs.immich.app/features/ml-hardware-acceleration
-      file: hwaccel.ml.yml
-      service: cuda # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    # extends: # uncomment this section for hardware acceleration - see https://docs.immich.app/features/ml-hardware-acceleration
+    #   file: hwaccel.ml.yml
+    #   service: cpu # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
     volumes:
-      - /mnt/main/appdata/immich/model-cache:/cache
+      - model-cache:/cache
     env_file: .env
     restart: unless-stopped
     healthcheck:
@@ -48,7 +47,7 @@ services:
 
   redis:
     container_name: immich-redis
-    image: docker.io/valkey/valkey:9@sha256:546304417feac0874c3dd576e0952c6bb8f06bb4093ea0c9ca303c73cf458f63
+    image: docker.io/valkey/valkey:9@sha256:3b55fbaa0cd93cf0d9d961f405e4dfcc70efe325e2d84da207a0a8e6d8fde4f9
     healthcheck:
       test: redis-cli ping || exit 1
     restart: unless-stopped
@@ -71,3 +70,6 @@ services:
     restart: unless-stopped
     healthcheck:
       disable: false
+
+volumes:
+  model-cache:

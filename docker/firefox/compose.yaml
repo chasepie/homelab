@@ -17,7 +17,7 @@ services:
       # - DRINODE=/dev/dri/renderD128
       # - DRI_NODE=/dev/dri/renderD128
     volumes:
-      - /mnt/main/appdata/firefox/config:/config
+      - /srv/docker/firefox/config:/config
     shm_size: "1gb"
     network_mode: "service:vpn"
     depends_on:
