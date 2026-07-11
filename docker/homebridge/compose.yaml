@@ -1,11 +1,12 @@
 services:
   homebridge:
+    container_name: homebridge
     image: homebridge/homebridge:latest
-    restart: always
+    restart: unless-stopped
     network_mode: host
-    hostname: docker-desktop  # Optional: Set container hostname
     volumes:
       - /srv/docker/homebridge:/homebridge
+      - /etc/hostname:/etc/hostname:ro
     environment:
       - TZ=America/Detroit  # Optional: Set your timezone
       - ENABLE_AVAHI=1      # Optional: Enable/disable Avahi (1=enabled, 0=disabled)
