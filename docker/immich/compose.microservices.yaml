@@ -26,6 +26,8 @@ services:
       REDIS_PORT: "2284"
       DB_HOSTNAME: "192.168.70.102"
       DB_PORT: "2285"
+      DB_DATA_LOCATION: # unset
+      UPLOAD_LOCATION: # unset
     restart: unless-stopped
     healthcheck:
       disable: false
