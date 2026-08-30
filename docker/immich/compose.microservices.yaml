@@ -30,7 +30,7 @@ services:
       DB_PORT: "2285"
       DB_DATA_LOCATION: # unset
       UPLOAD_LOCATION: upload_location_share
-    restart: unless-stopped
+    restart: no
     healthcheck:
       disable: false
 
