@@ -36,13 +36,13 @@ services:
   redis:
     container_name: immich-redis
     image: docker.io/valkey/valkey:9@sha256:8e8d64b405ce18f41b8e5ee20aa4687a8ed0022d1298f2ce31cdcf3a76e09411
-    environment:
-      REDIS_USERNAME: ${REDIS_USERNAME}
-      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    # valkey/valkey does not read REDIS_PASSWORD as an env var (Bitnami-only feature,
+    # see https://github.com/valkey-io/valkey-container/issues/46) - auth must be set via --requirepass
+    command: valkey-server --requirepass ${REDIS_PASSWORD}
     ports:
       - "2284:6379"
     healthcheck:
-      test: redis-cli ping || exit 1
+      test: redis-cli -a ${REDIS_PASSWORD} ping || exit 1
     restart: unless-stopped
 
   database:
