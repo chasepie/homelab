@@ -3,20 +3,33 @@ services:
     image: rommapp/romm:latest
     container_name: romm
     restart: unless-stopped
-    env_file: .env
     environment:
       - DB_HOST=romm-db
       - DB_NAME=romm
       - DB_USER=romm-user
       - DB_PASSWD=${MARIADB_PASSWORD}
+      - ENABLE_SCHEDULED_UPDATE_LAUNCHBOX_METADATA=true
+      - FLASHPOINT_API_ENABLED=true
+      - HASHEOUS_API_ENABLED=true
+      - HLTB_API_ENABLED=true
+      - IGDB_CLIENT_ID=${IGDB_CLIENT_ID}
+      - IGDB_CLIENT_SECRET=${IGDB_CLIENT_SECRET}
+      - LAUNCHBOX_API_ENABLED=true
+      - PLAYMATCH_API_ENABLED=true
+      - RETROACHIEVEMENTS_API_KEY=${RETROACHIEVEMENTS_API_KEY}
+      - ROMM_AUTH_SECRET_KEY=${ROMM_AUTH_SECRET_KEY}
+      - SCREENSCRAPER_PASSWORD=${SCREENSCRAPER_PASSWORD}
+      - SCREENSCRAPER_USER=${SCREENSCRAPER_USER}
+      - STEAMGRIDDB_API_KEY=${STEAMGRIDDB_API_KEY}
+      - TGDB_API_ENABLED=true
     volumes:
+      - romm_resources:/romm/resources
+      - romm_redis_data:/redis-data
+      - /srv/docker/romm/library:/romm/library
       - /srv/docker/romm/assets:/romm/assets
       - /srv/docker/romm/config:/romm/config
-      - /srv/docker/romm/redis_data:/redis-data
-      - /srv/docker/romm/resources:/romm/resources
-      - /srv/docker/romm/library:/romm/library
     ports:
-      - 8280:8080
+      - 80:8080
     depends_on:
       romm-db:
         condition: service_healthy
@@ -28,14 +41,21 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
       - MARIADB_DATABASE=romm
       - MARIADB_USER=romm-user
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
     volumes:
-      - /srv/docker/romm/mysql_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
       start_period: 30s
       start_interval: 10s
       interval: 10s
       timeout: 5s
       retries: 5
+
+volumes:
+  mysql_data:
+  romm_resources:
+  romm_redis_data:
