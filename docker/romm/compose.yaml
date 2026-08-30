@@ -12,9 +12,9 @@ services:
     volumes:
       - /srv/docker/romm/assets:/romm/assets
       - /srv/docker/romm/config:/romm/config
-      - /srv/docker/romm/romm_redis_data:/redis-data
-      - /srv/docker/romm/romm_resources:/romm/resources
-      - /mnt/unas-pro/romm-library:/romm/library
+      - /srv/docker/romm/redis_data:/redis-data
+      - /srv/docker/romm/resources:/romm/resources
+      - /srv/docker/romm/library:/romm/library
     ports:
       - 8280:8080
     depends_on:
