@@ -39,4 +39,4 @@ volumes:
     driver_opts:
       type: cifs
       o: "username=${SMB_USERNAME},password=${SMB_PASSWORD}"
-      device: "//${SERVER_ADDRESS}/upload_location_share/"
+      device: "//${SERVER_ADDRESS}/srv/docker/immich/library"
