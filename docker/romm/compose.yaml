@@ -29,7 +29,7 @@ services:
       - /srv/docker/romm/assets:/romm/assets
       - /srv/docker/romm/config:/romm/config
     ports:
-      - 80:8080
+      - 8280:8080
     depends_on:
       romm-db:
         condition: service_healthy
