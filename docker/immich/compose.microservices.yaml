@@ -29,7 +29,7 @@ services:
       DB_HOSTNAME: ${SERVER_ADDRESS}
       DB_PORT: "2285"
       DB_DATA_LOCATION: # unset
-      UPLOAD_LOCATION: # unset
+      UPLOAD_LOCATION: upload_location_share
     restart: unless-stopped
     healthcheck:
       disable: false
