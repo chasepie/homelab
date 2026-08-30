@@ -33,7 +33,7 @@ services:
       DB_PORT: "2285"
       DB_DATA_LOCATION: # unset
       UPLOAD_LOCATION: upload_location_share
-    restart: "no"
+    restart: unless-stopped
     healthcheck:
       # The microservices worker does not serve the API, so the image's default
       # healthcheck would always fail.
