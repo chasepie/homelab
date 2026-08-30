@@ -22,6 +22,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
+    environment:
+      IMMICH_WORKERS_INCLUDE: "api"
     ports:
       - "2283:2283"
     depends_on:
@@ -34,6 +36,8 @@ services:
   redis:
     container_name: immich-redis
     image: docker.io/valkey/valkey:9@sha256:8e8d64b405ce18f41b8e5ee20aa4687a8ed0022d1298f2ce31cdcf3a76e09411
+    ports:
+      - "2284:6379"
     healthcheck:
       test: redis-cli ping || exit 1
     restart: unless-stopped
@@ -51,6 +55,8 @@ services:
     volumes:
       # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
       - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
+    ports:
+      - "2285:5432"
     shm_size: 128mb
     restart: unless-stopped
     healthcheck:

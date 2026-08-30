@@ -1,0 +1,33 @@
+#
+# WARNING: To install Immich, follow our guide: https://docs.immich.app/install/docker-compose
+#
+# Make sure to use the docker-compose.yml of the current release:
+#
+# https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
+#
+# The compose file on main may not be compatible with the latest release.
+
+name: immich
+
+services:
+  immich-microservices:
+    container_name: immich-microservices
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    extends:
+      file: hwaccel.transcoding.yml
+      service: nvenc # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
+    volumes:
+      # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
+      - ${UPLOAD_LOCATION}:/data
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    environment:
+      IMMICH_WORKERS_INCLUDE: "microservices"
+      REDIS_HOSTNAME: "rpi5-02.local"
+      REDIS_PORT: "2284"
+      DB_HOSTNAME: "rpi5-02.local"
+      DB_PORT: "2285"
+    restart: unless-stopped
+    healthcheck:
+      disable: false
