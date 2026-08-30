@@ -24,9 +24,9 @@ services:
       - .env
     environment:
       IMMICH_WORKERS_INCLUDE: "microservices"
-      REDIS_HOSTNAME: "rpi5-02.local"
+      REDIS_HOSTNAME: "192.168.70.102"
       REDIS_PORT: "2284"
-      DB_HOSTNAME: "rpi5-02.local"
+      DB_HOSTNAME: "192.168.70.102"
       DB_PORT: "2285"
     restart: unless-stopped
     healthcheck:
