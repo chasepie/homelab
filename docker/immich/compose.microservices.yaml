@@ -17,17 +17,26 @@ services:
       file: hwaccel.transcoding.yml
       service: nvenc # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
     volumes:
+      # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
+      - ${UPLOAD_LOCATION}:/data
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
     environment:
       IMMICH_WORKERS_INCLUDE: "microservices"
-      REDIS_HOSTNAME: "192.168.70.102"
+      REDIS_HOSTNAME: ${SERVER_ADDRESS}
       REDIS_PORT: "2284"
-      DB_HOSTNAME: "192.168.70.102"
+      DB_HOSTNAME: ${SERVER_ADDRESS}
       DB_PORT: "2285"
       DB_DATA_LOCATION: # unset
       UPLOAD_LOCATION: # unset
     restart: unless-stopped
     healthcheck:
       disable: false
+
+volumes:
+  upload_location_share:
+    driver_opts:
+      type: cifs
+      o: "username=${SMB_USERNAME},password=${SMB_PASSWORD}"
+      device: "//${SERVER_ADDRESS}/srv/docker/immich/library"
