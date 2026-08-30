@@ -117,6 +117,18 @@ HEALTHCHECKS_URL=[[HEALTHCHECKS_UNRAID]]
 ##
 
 [[stack]]
+name = "homebridge"
+[stack.config]
+server = "Raspberry Pi 5 - 03"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/homebridge"
+
+##
+
+[[stack]]
 name = "immich"
 [stack.config]
 server = "Unraid"
@@ -352,7 +364,7 @@ endpoint.params.url = "https://api.pushover.net/1/messages.json?token=[[PUSHOVER
 name = "Local"
 [builder.config]
 type = "Server"
-params.server = "Local"
+params.servers = ["Local"]
 
 ##
 
