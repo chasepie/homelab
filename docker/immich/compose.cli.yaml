@@ -1,0 +1,45 @@
+# TEMPORARY stack -- one-shot import of the UNAS Pro photo share into Immich.
+# Delete the Komodo stack once the import has finished. This is a job, not a
+# service: it runs once, exits, and stays Exited. That is success, not a crash.
+#
+# Deploy it as its own Komodo stack, NOT as part of the immich stack -- a
+# redeploy of one must not touch the other. Turn OFF auto-deploy on webhook
+# for this stack: every commit to the repo would otherwise re-trigger the
+# import and re-read the whole library over SMB.
+#
+# --skip-hash is safe: the server always dedupes by checksum on ingest, so
+# byte-identical files are rejected either way. It is also faster here.
+# Client-side hashing has to read the whole library over SMB off the UNAS
+# spinning disks -- the bottleneck -- purely to save the upload leg, which is
+# a local write to NVMe and effectively free. That trade only pays off when
+# the upload leg is the slow one.
+
+name: immich-cli
+
+services:
+  immich-cli:
+    container_name: immich-cli
+    image: ghcr.io/immich-app/immich-cli:latest
+    command: ["upload", "--skip-hash", "--concurrency", "4", "/import"]
+    volumes:
+      - photo_share:/import:ro
+    environment:
+      # Reached over the LAN rather than by container name: this stack has its
+      # own Compose project, so the immich stack's network is not attached.
+      IMMICH_INSTANCE_URL: http://${SERVER_ADDRESS}:2283/api
+      IMMICH_API_KEY: ${IMMICH_API_KEY}
+      IMMICH_RECURSIVE: "true"
+      IMMICH_DELETE_ASSETS: "false"
+      IMMICH_DELETE_DUPLICATES: "false"
+      # There is no TTY under `compose up -d`; the progress bar would fill the
+      # Komodo log viewer with escape codes.
+      IMMICH_PROGRESS_BAR: "false"
+    # Exiting is the expected outcome. Anything else re-runs the whole import.
+    restart: "no"
+
+volumes:
+  photo_share:
+    driver_opts:
+      type: cifs
+      o: "username=${UNAS_SMB_USERNAME},password=${UNAS_SMB_PASSWORD},uid=0,gid=0,iocharset=utf8,vers=3.0,ro"
+      device: "//192.168.1.199/Personal-Drive/Photos"
