@@ -17,8 +17,11 @@ services:
       file: hwaccel.transcoding.yml
       service: nvenc # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
     volumes:
-      # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
-      - ${UPLOAD_LOCATION}:/data
+      # Deliberately not ${UPLOAD_LOCATION} as upstream has it: this worker runs
+      # on a different host than the server, so /data is the server's media
+      # mounted over SMB rather than a local path. UPLOAD_LOCATION in .env is
+      # the server's path and is meaningless here.
+      - upload_location_share:/data
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
@@ -30,13 +33,15 @@ services:
       DB_PORT: "2285"
       DB_DATA_LOCATION: # unset
       UPLOAD_LOCATION: upload_location_share
-    restart: no
+    restart: "no"
     healthcheck:
-      disable: false
+      # The microservices worker does not serve the API, so the image's default
+      # healthcheck would always fail.
+      disable: true
 
 volumes:
   upload_location_share:
     driver_opts:
       type: cifs
-      o: "username=${SMB_USERNAME},password=${SMB_PASSWORD}"
-      device: "//${SERVER_ADDRESS}/srv/docker/immich/library"
+      o: "username=${SMB_USERNAME},password=${SMB_PASSWORD},uid=0,gid=0,vers=3.0"
+      device: "//${SERVER_ADDRESS}/upload_location_share"
