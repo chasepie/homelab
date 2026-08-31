@@ -9,6 +9,29 @@ services:
     extends:
       file: hwaccel.ml.yml
       service: cuda # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
+    environment:
+      # Both of these bound VRAM use. Without them the defaults are sized for a
+      # CPU box and will exhaust a 12 GB card during a facial-recognition
+      # sweep, which surfaces as onnxruntime `BFCArena ... Failed to allocate`
+      # errors on Conv nodes.
+      #
+      # The defaults below are the measured-safe values for the 12 GB 3080
+      # sharing its card with Ollama and NVENC. A host with a bigger card or
+      # less competition for it should override them in its Komodo stack
+      # environment -- run ml-vram-probe.py there to get its numbers. See
+      # "Sizing machine learning for a host" in README.md.
+      #
+      # These must be set in the Komodo stack environment (or the project
+      # .env), NOT in compose.env: env_file does not feed ${...} interpolation.
+      #
+      # Cap faces per session.run(). The upstream default on CUDA + ONNX is
+      # unlimited (models/facial_recognition/recognition.py), so one group photo
+      # becomes one arbitrarily large batch.
+      MACHINE_LEARNING_MAX_BATCH_SIZE__FACIAL_RECOGNITION: "${ML_FACE_BATCH:-16}"
+      # Cap concurrent inference. The upstream default is os.cpu_count() -- 20
+      # on Unraid -- but measured throughput saturates at 4 on a single GPU,
+      # which serializes the compute anyway. The rest is memory for no speed.
+      MACHINE_LEARNING_REQUEST_THREADS: "${ML_REQUEST_THREADS:-4}"
     volumes:
       - model-cache:/cache
     restart: unless-stopped
