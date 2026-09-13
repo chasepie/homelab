@@ -48,7 +48,7 @@ Reusable task files in `tasks/` are included by playbooks rather than run direct
 | `configure-auto-upgrades.redhat.yml` | Enables `dnf-automatic` on RHEL/Fedora.                                                                                             |
 | `update-packages.debian.yml`         | Updates packages via apt and reboots if required on Debian/Ubuntu.                                                                  |
 | `update-packages.redhat.yml`         | Updates packages via dnf and reboots if required on RHEL/Fedora.                                                                    |
-| `update-docker-compose.yml`          | Pulls the latest image for a given `compose_dir` and restarts the service if updated.                                               |
+| `update-docker-compose.yml`          | Waits for the Docker daemon, then pulls the latest image for a given `compose_dir` and restarts the service if updated.              |
 
 ### `configure-auto-upgrades.debian.yml`
 
@@ -69,7 +69,7 @@ Reusable task files in `tasks/` are included by playbooks rather than run direct
 
 | Task                        | Description                                                                               |
 | --------------------------- | ----------------------------------------------------------------------------------------- |
-| Update packages             | Runs `apt-get dist-upgrade` with autoremove and autoclean.                                |
+| Update packages             | Runs `apt-get dist-upgrade --auto-remove`.                                                |
 | Check if reboot is required | Checks for `/var/run/reboot-required` written by the kernel/package post-install scripts. |
 | Reboot if required          | Reboots the host and waits for it to come back if the reboot flag file is present.        |
 
@@ -80,3 +80,13 @@ Reusable task files in `tasks/` are included by playbooks rather than run direct
 | Update packages             | Runs `dnf upgrade` across all installed packages.                                                |
 | Check if reboot is required | Runs `needs-restarting -r` (exit code `1` = reboot needed, `0` = clean).                         |
 | Reboot if required          | Reboots the host and waits for it to come back if `needs-restarting` signals a reboot is needed. |
+
+### `update-docker-compose.yml`
+
+Included once per `compose_dir` via `loop`; skipped on hosts where that directory does not exist.
+
+| Task                          | Description                                                                                                                                                              |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Check if compose directory exists | Guards the tasks below so a stack only runs on the host that hosts it.                                                                                                 |
+| Wait for Docker daemon to be ready | Retries `docker info` until it succeeds. A `docker-ce` upgrade earlier in the play restarts the daemon and bounces every container; without this the task below would report `changed` against containers still starting, needing a second run to settle. |
+| Update docker compose service | Runs `docker compose up` with `pull: always`. Reports `changed` only when an image layer is actually pulled or a container is created/recreated — registry checks alone do not count. |

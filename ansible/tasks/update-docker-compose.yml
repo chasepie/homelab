@@ -3,6 +3,19 @@
     path: "{{ compose_dir }}"
   register: compose_dir_stat
 
+# Upgrading docker-ce restarts the Docker daemon, which bounces every container
+# on the host. Without this wait the compose task below runs while containers are
+# still coming back up and reports "changed", requiring a second playbook run to
+# settle.
+- name: Wait for Docker daemon to be ready - {{ compose_dir }}
+  ansible.builtin.command: docker info
+  register: docker_info
+  until: docker_info.rc == 0
+  retries: 12
+  delay: 5
+  changed_when: false
+  when: compose_dir_stat.stat.exists
+
 - name: Update docker compose service - {{ compose_dir }}
   community.docker.docker_compose_v2:
     project_src: "{{ compose_dir }}"

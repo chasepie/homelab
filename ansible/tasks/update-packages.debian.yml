@@ -3,7 +3,6 @@
     update_cache: true
     upgrade: full
     autoremove: true
-    autoclean: true
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Check if reboot is required (Debian/Ubuntu)
