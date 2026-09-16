@@ -1,0 +1,15 @@
+services:
+  valheim-server-midgaard:
+    image: ghcr.io/community-valheim-tools/valheim-server
+    cap_add:
+      - sys_nice
+    volumes:
+      - /srv/docker/valheim-server-midgaard/config:/config
+      - /srv/docker/valheim-server-midgaard/data:/opt/valheim
+    ports:
+      - "2456:2456/udp"
+      - "9001:9001/tcp"
+    env_file:
+      - .env
+    restart: unless-stopped
+    stop_grace_period: 2m
