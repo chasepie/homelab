@@ -359,7 +359,7 @@ poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
 linked_repo = "homelab"
-run_directory = "docker/valheim-server-midgaard"
+run_directory = "docker/valheim-servers/Midgaard"
 pre_deploy.command = """
 export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
 export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
@@ -389,7 +389,7 @@ config.schedule = "Every day at 01:00"
 name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true }
+  { execution.type = "BackupCoreDatabase", execution.params = {}, enabled = true },
 ]
 
 ##
@@ -405,7 +405,7 @@ config.schedule = "Every day at 03:00"
 name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "GlobalAutoUpdate", execution.params.skip_auto_update = false, enabled = true }
+  { execution.type = "GlobalAutoUpdate", execution.params.skip_auto_update = false, enabled = true },
 ]
 
 ##
@@ -421,7 +421,7 @@ config.schedule = "Every day at 06:00"
 name = "Stage 1"
 enabled = true
 executions = [
-  { execution.type = "RotateAllServerKeys", execution.params = {}, enabled = true }
+  { execution.type = "RotateAllServerKeys", execution.params = {}, enabled = true },
 ]
 
 ##
