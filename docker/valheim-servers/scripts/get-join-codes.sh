@@ -10,16 +10,16 @@
 #
 # Run it on the host that runs the stacks (the repo is cloned there):
 #
-#     ./join-codes.sh
+#     ./get-join-codes.sh
 #
 # Or from anywhere, naming an SSH host from your ~/.ssh/config:
 #
-#     ./join-codes.sh unraid
-#     VALHEIM_SSH_HOST=unraid ./join-codes.sh
+#     ./get-join-codes.sh unraid
+#     VALHEIM_SSH_HOST=unraid ./get-join-codes.sh
 #
-# Every container whose name matches FILTER is picked up, so additional
-# valheim-server-* stacks need no change here. Servers that are still
-# booting report no code yet rather than being skipped silently.
+# Every container whose name matches FILTER is picked up, so a new world
+# under docker/valheim-servers/ needs no change here. Servers that are
+# still booting report no code yet rather than being skipped silently.
 
 set -euo pipefail
 
@@ -50,7 +50,7 @@ found=0
 for container in $containers; do
     found=1
 
-    # "Session "Midgaard" with join code 808417 and IP 1.2.3.4:2456 is active
+    # "Session "Midgaard" with join code 123456 and IP 1.2.3.4:2456 is active
     # with 0 player(s)" -- logged at registration and on each join/leave, so
     # the last one is current. Not time-bounded: a long-lived server may have
     # registered days ago.
