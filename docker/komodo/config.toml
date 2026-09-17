@@ -1,4 +1,12 @@
 [[server]]
+name = "Gaming PC"
+[server.config]
+enabled = true
+send_unreachable_alerts = false
+
+##
+
+[[server]]
 name = "Local"
 [server.config]
 enabled = true
@@ -131,7 +139,7 @@ run_directory = "docker/homebridge"
 [[stack]]
 name = "immich"
 [stack.config]
-server = "Unraid"
+server = "Raspberry Pi 5 - 02"
 poll_for_updates = true
 auto_update = true
 auto_update_all_services = true
@@ -143,6 +151,55 @@ export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
 op inject -f -i compose.env -o .env
 """
 pre_deploy.shell_mode = false
+
+##
+
+[[stack]]
+name = "immich-microservices"
+[stack.config]
+server = "Unraid"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/immich"
+file_paths = ["compose.microservices.yaml"]
+pre_deploy.command = """
+export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
+export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
+op inject -f -i compose.env -o .env
+"""
+pre_deploy.shell_mode = false
+
+##
+
+[[stack]]
+name = "immich-remote-ml"
+[stack.config]
+server = "Unraid"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/immich"
+file_paths = ["compose.remote-ml.yaml"]
+environment = """
+MACHINE_LEARNING_MAX_BATCH_SIZE__FACIAL_RECOGNITION = 16
+MACHINE_LEARNING_REQUEST_THREADS = 4
+"""
+
+##
+
+[[stack]]
+name = "immich-remote-ml-2"
+[stack.config]
+server = "Gaming PC"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/immich"
+file_paths = ["compose.remote-ml.yaml"]
 
 ##
 
@@ -285,6 +342,24 @@ auto_update = true
 auto_update_all_services = true
 linked_repo = "homelab"
 run_directory = "docker/sparky-fitness"
+pre_deploy.command = """
+export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
+export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
+op inject -f -i compose.env -o .env
+"""
+pre_deploy.shell_mode = false
+
+##
+
+[[stack]]
+name = "valheim-server-midgaard"
+[stack.config]
+server = "Unraid"
+poll_for_updates = true
+auto_update = true
+auto_update_all_services = true
+linked_repo = "homelab"
+run_directory = "docker/valheim-server-midgaard"
 pre_deploy.command = """
 export OP_CONNECT_HOST=[[OP_CONNECT_HOST]]
 export OP_CONNECT_TOKEN=[[OP_CONNECT_TOKEN]]
