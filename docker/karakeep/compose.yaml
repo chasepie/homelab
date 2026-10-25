@@ -42,4 +42,7 @@ services:
     environment:
       MEILI_NO_ANALYTICS: "true"
     volumes:
-      - /srv/docker/karakeep/meilisearch:/meili_data
+      - meilisearch:/meili_data
+
+volumes:
+  meilisearch:
